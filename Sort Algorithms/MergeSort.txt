@@ -1,0 +1,49 @@
+#include <iostream>
+
+using namespace std;
+
+void Merge(int a[],int l, int mid, int r){
+	int tempArr[1000];
+	int first1 = l;
+	int first2 = mid+1;
+	int index = l;
+	while (first1<=mid && first2 <=r){
+		if (a[first1]<=a[first2])
+			tempArr[index] = a[first1++];
+		else
+			tempArr[index] = a[first2++];
+		index++;
+
+	}
+	while (first1<=mid){
+		tempArr[index++] = a[first1++];
+		
+	}
+	while (first2<=r){
+		tempArr[index++] = a[first2++];
+	}
+	for (int i=l;i<=r;i++){
+		a[i] = tempArr[i-l];
+	}
+}
+
+
+void MergeSort(int a[], int l, int r){
+	if (l<r){
+		int mid=l+(r-l)/2;
+		MergeSort(a,l,mid);
+		MergeSort(a,mid+1,r);
+		Merge(a, l, mid, r);
+	}
+}
+
+int main()
+{
+    int n=5;
+    int a[]={1,4,2,5,3};
+    MergeSort(a,0,n-1);
+    for (int i=0;i<n;i++)
+        cout<<a[i]<<" ";
+
+    return 0;
+}
